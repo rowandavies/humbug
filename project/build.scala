@@ -71,7 +71,7 @@ object build extends Build {
           Seq(
             "com.twitter"      %% "scrooge-generator"  % depend.versions.scrooge,
             "com.twitter"      %% "bijection-scrooge"  % depend.versions.bijection      % "test",
-            "au.com.cba.omnia" %% "omnia-test"         % "2.1.0-20150113040614-4f96d2b" % "test"
+            "au.com.cba.omnia" %% "omnia-test"         % "2.2.0-20150316051318-26deac5" % "test"
           )
       )
   ).dependsOn(core)
