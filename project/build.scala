@@ -20,12 +20,15 @@ import au.com.cba.omnia.uniform.dependency.UniformDependencyPlugin._
 import au.com.cba.omnia.uniform.assembly.UniformAssemblyPlugin._
 
 object build extends Build {
+  val omniaTestVersion = "2.3.1-20150326002029-30adddf"
+
   val compileThrift = TaskKey[Seq[File]](
     "compile-thrift", "generate thrift needed for tests")
 
   lazy val standardSettings =
     Defaults.coreDefaultSettings ++
     uniformDependencySettings ++
+    strictDependencySettings ++
     uniform.docSettings("https://github.com/CommBank/humbug") ++
     Seq(updateOptions := updateOptions.value.withCachedResolution(true))
 
@@ -53,7 +56,7 @@ object build extends Build {
         libraryDependencies ++=
           Seq(
             "com.twitter"      %% "scrooge-core"        % depend.versions.scrooge,
-            "org.apache.thrift" % "libthrift"           % "0.8.0" % "provided"
+            "org.apache.thrift" % "libthrift"           % depend.versions.libthrift % "provided" // required for scaladoc
           )
       )
   )
@@ -67,12 +70,17 @@ object build extends Build {
       uniformAssemblySettings ++
       inConfig(Test)(thriftSettings) ++
       Seq(
-        libraryDependencies ++= depend.scalaz() ++ depend.testing() ++
+        libraryDependencies ++= depend.hadoopClasspath ++ depend.scalaz() ++ depend.testing() ++
           Seq(
-            "com.twitter"      %% "scrooge-generator"  % depend.versions.scrooge,
-            "com.twitter"      %% "bijection-scrooge"  % depend.versions.bijection      % "test",
-            "au.com.cba.omnia" %% "omnia-test"         % "2.3.0-20150318033558-1034fa2" % "test"
-          )
+            "com.twitter"      %% "scrooge-generator" % depend.versions.scrooge,
+            "com.twitter"      %% "bijection-scrooge" % depend.versions.bijection % "test"
+              // exclude clashes with scrooge-generator
+              exclude("com.twitter", s"scrooge-core_${scalaBinaryVersion.value}")
+              exclude("com.twitter", s"util-core_${scalaBinaryVersion.value}")
+              exclude("com.twitter", s"util-codec_${scalaBinaryVersion.value}"),
+
+            "au.com.cba.omnia" %% "omnia-test"        % omniaTestVersion          % "test"
+          ).map(noHadoop(_))
       )
   ).dependsOn(core)
 
