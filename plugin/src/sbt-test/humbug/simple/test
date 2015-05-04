@@ -8,4 +8,6 @@ $ exists target/scala-2.10/src_managed/main/au/com/cba/omnia/humbug/test/Large.s
 
 > 'set au.com.cba.omnia.humbug.HumbugSBT.humbugThriftValidators in Compile += au.com.cba.omnia.humbug.ThriftValidator(_ => List("failure"))'
 
+> clean
+
 -> compile

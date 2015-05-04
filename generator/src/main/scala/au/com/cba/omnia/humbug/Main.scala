@@ -36,7 +36,7 @@ object Main {
     }
   }
 
-  def validateAndGenerate(dst: String, thriftFiles: List[String], validators: Seq[ThriftValidator]): Unit = {
+  def validateAndGenerate(dst: String, thriftFiles: List[String], validators: Seq[ThriftValidator]): Set[File] = {
     val docs = thriftFiles.map(parseFile)
     val validationErrorsPerFile = thriftFiles.zip(docs).flatMap {
       case (path, doc) => {
@@ -47,7 +47,7 @@ object Main {
     }
 
     if (validationErrorsPerFile.isEmpty) {
-      docs.foreach(saveThriftAsScala(new File(dst), _))
+      docs.flatMap(saveThriftAsScala(new File(dst), _)).toSet
     } else {
       throwValidationException(validationErrorsPerFile)
     }
@@ -63,14 +63,13 @@ object Main {
     parser.parseFile(path)
   }
 
-  protected def saveThriftAsScala(dstDir: File, doc: Document) = {
-    Generator.generateDoc(doc).foreach {
-      case (sub, code) =>
+  protected def saveThriftAsScala(dstDir: File, doc: Document): Set[File] = {
+    Generator.generateDoc(doc).map { case (sub, code) =>
         saveScalaCode(dstDir, sub, code)
-    }
+    }.toSet
   }
 
-  protected def saveScalaCode(base: File, filename: String, code: String) = {
+  protected def saveScalaCode(base: File, filename: String, code: String): File = {
     val dst = new File(base, filename)
     val dir = dst.getParentFile
     if (dir != null && !dir.exists()) {
@@ -80,6 +79,8 @@ object Main {
     val writer = new FileWriter(dst)
     writer.write(code)
     writer.close()
+
+    dst
   }
 
   protected def throwValidationException(validationErrorsPerFile: List[(String, List[String])]) = {

@@ -30,9 +30,8 @@ object HumbugSBT extends Plugin {
     outputDir: File,
     thriftFiles: Set[File],
     validators: Seq[ThriftValidator]
-  ) {
+  ): Set[File] =
     Main.validateAndGenerate(outputDir.getAbsolutePath, thriftFiles.map(_.getAbsolutePath).toList, validators)
-  }
 
   def filter(dependencies: Classpath, whitelist: Set[String]): Classpath = {
     dependencies.filter { dep =>
@@ -58,7 +57,7 @@ object HumbugSBT extends Plugin {
     "directory containing external source files to compile"
   )
 
-  val humbugThriftSources = TaskKey[Seq[File]](
+  val humbugThriftSources = TaskKey[Set[File]](
     "humbug-thrift-sources",
     "complete list of thrift source files to compile"
   )
@@ -66,11 +65,6 @@ object HumbugSBT extends Plugin {
   val humbugThriftOutputFolder = SettingKey[File](
     "humbug-thrift-output-folder",
     "output folder for generated scala files (defaults to sourceManaged)"
-  )
-
-  val humbugIsDirty = TaskKey[Boolean](
-    "humbug-is-dirty",
-    "true if humbug has decided it needs to regenerate the scala files from thrift sources"
   )
 
   val humbugUnpackDeps = TaskKey[Seq[File]](
@@ -103,14 +97,13 @@ object HumbugSBT extends Plugin {
     humbugThriftOutputFolder <<= (sourceManaged) { identity },
     humbugThriftDependencies := Seq(),
     humbugThriftValidators := Seq(),
-    humbugIsDirty := true,
 
     // complete list of source files
     humbugThriftSources <<= (
       humbugThriftSourceFolder,
       humbugUnpackDeps
     ) map { (srcDir, extDirs) =>
-      (Seq(srcDir) ++ extDirs).flatMap { dir => (dir ** "*.thrift").get }
+      (Set(srcDir) ++ extDirs).flatMap { dir => (dir ** "*.thrift").get }
     },
 
     // unpack thrift files from all dependencies in the `thrift` configuration
@@ -149,17 +142,16 @@ object HumbugSBT extends Plugin {
     // actually run humbug
     humbugGen <<= (
       streams,
-      humbugIsDirty,
       humbugThriftSources,
       humbugThriftOutputFolder,
       humbugThriftValidators
-    ) map { (out, isDirty, sources, outputDir, validators) =>
-      // for some reason, sbt sometimes calls us multiple times, often with no source files.
-      if (isDirty && !sources.isEmpty) {
-        out.log.info("Generating humbug thrift for %s ...".format(sources.mkString(", ")))
-        compile(out.log, outputDir, sources.toSet, validators)
-      }
-      (outputDir ** "*.scala").get.toSeq
+    ) map { (out, sources, outputDir, validators) =>
+      val cachingGen =
+        FileFunction.cached(outputDir, inStyle = FilesInfo.hash, outStyle = FilesInfo.exists)(
+          files => compile(out.log, outputDir, sources.toSet, validators)
+        )
+
+      cachingGen(sources).toList
     },
     sourceGenerators <+= humbugGen
   )

@@ -39,7 +39,7 @@ object build extends Build {
     strictDependencySettings ++
     uniform.docSettings("https://github.com/CommBank/humbug") ++
     Seq(
-      updateOptions      := updateOptions.value.withCachedResolution(true)
+      updateOptions := updateOptions.value.withCachedResolution(true)
     )
 
   lazy val scala210Settings = Seq(
@@ -91,7 +91,7 @@ object build extends Build {
       inConfig(Test)(thriftSettings) ++
       Seq(
         libraryDependencies ++= depend.hadoopClasspath ++ depend.scalaz() ++ Seq(
-          "com.twitter"    %% "scrooge-generator" % depend.versions.scrooge,
+          "com.twitter"    %% "scrooge-generator"         % depend.versions.scrooge,
           "org.specs2"     %% "specs2-core"               % depend.versions.specs      % "test"
             exclude("org.ow2.asm", "asm"),
           "org.specs2"     %% "specs2-scalacheck"         % depend.versions.specs      % "test" 
@@ -106,7 +106,7 @@ object build extends Build {
             // exclude clashes with scrooge-generator
             exclude("com.twitter", s"scrooge-core_${scalaBinaryVersion.value}")
             exclude("com.twitter", s"util-core_${scalaBinaryVersion.value}")
-            exclude("com.twitter", s"util-codec_${scalaBinaryVersion.value}")//,
+            exclude("com.twitter", s"util-codec_${scalaBinaryVersion.value}")
         ).map(noHadoop(_))
       )
   ).dependsOn(core)
@@ -129,11 +129,12 @@ object build extends Build {
       sourceManaged
     ) map { (out, base, cp, outputDir) =>
       val files = (s"find ${base.getAbsolutePath} -name *.thrift" !!).split("\n")
-      val cmd = s"java -cp ${cp.files.absString} au.com.cba.omnia.humbug.Main ${outputDir.getAbsolutePath} ${files.mkString(" ")}"
+      val dst = outputDir / "humbug"
+      val cmd = s"java -cp ${cp.files.absString} au.com.cba.omnia.humbug.Main ${dst.getAbsolutePath} ${files.mkString(" ")}"
       out.log.info(cmd)
       cmd ! out.log
 
-      (outputDir ** "*.scala").get.toSeq
+      (dst ** "*.scala").get.toSeq
     },
     sourceGenerators <+= compileThrift
   )
