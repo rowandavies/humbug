@@ -28,14 +28,14 @@ struct Types {
 
 struct Listish {
   1: i16 short
-  2: list<string> list
+  2: list<string> listy
 }
 
 struct Mapish {
   1: i32 int
-  2: map<string, i32> map
+  2: map<string, i32> mapy
 }
 
 struct Nested {
-  1: map<string, list<i32>> map
+  1: map<string, list<i32>> mapy
 }

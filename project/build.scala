@@ -14,14 +14,22 @@
 
 import sbt._, Keys._
 
+import sbtdoge.CrossPerProjectPlugin.{projectSettings => dogeProjectSettings}
+
+import au.com.cba.omnia.uniform.core.scala.Scala
 import au.com.cba.omnia.uniform.core.standard.StandardProjectPlugin._
 import au.com.cba.omnia.uniform.core.version.UniqueVersionPlugin._
 import au.com.cba.omnia.uniform.dependency.UniformDependencyPlugin._
 import au.com.cba.omnia.uniform.assembly.UniformAssemblyPlugin._
 
+/**
+  * This build publishes a Scala 2.10 version of core, generator and plugin since
+  * SBT plugins are based on Scala 2.10.
+  * It also publishes a Scala 2.11 version of core since that is what the other projects depend on.
+  * It uses sbt-doge to help do proper cross compilation, etc. since native SBT support for this is
+  * poor.
+  */
 object build extends Build {
-  val omniaTestVersion = "2.3.1-20150326002029-30adddf"
-
   val compileThrift = TaskKey[Seq[File]](
     "compile-thrift", "generate thrift needed for tests")
 
@@ -30,7 +38,17 @@ object build extends Build {
     uniformDependencySettings ++
     strictDependencySettings ++
     uniform.docSettings("https://github.com/CommBank/humbug") ++
-    Seq(updateOptions := updateOptions.value.withCachedResolution(true))
+    Seq(
+      updateOptions      := updateOptions.value.withCachedResolution(true)
+    )
+
+  lazy val scala210Settings = Seq(
+    scalaVersion       := "2.10.5",
+    crossScalaVersions := Seq(scalaVersion.value),
+    scalacOptions      := scalacOptions.value.filter(o =>
+      !(scalaBinaryVersion.value == "2.10" && o == "-Ywarn-unused-import")
+    )
+  )
 
   lazy val all = Project(
     id = "all",
@@ -38,12 +56,11 @@ object build extends Build {
     settings =
       standardSettings ++
       uniform.project("humbug-all", "au.com.cba.omnia.humbug.all") ++
+      scala210Settings ++
       uniform.ghsettings ++
-      Seq(
-        publishArtifact := false
-      ),
-    aggregate = Seq(core, generator, plugin)
-    )
+      dogeProjectSettings ++
+      Seq(publishArtifact := false)
+  ).aggregate(core, generator, plugin)
 
   lazy val core = Project(
     id = "core",
@@ -51,13 +68,14 @@ object build extends Build {
     settings =
       standardSettings ++
       uniform.project("humbug-core", "au.com.cba.omnia.humbug") ++
+      scala210Settings ++
       uniform.ghsettings ++
       Seq(
-        libraryDependencies ++=
-          Seq(
-            "com.twitter"      %% "scrooge-core"        % depend.versions.scrooge,
-            "org.apache.thrift" % "libthrift"           % depend.versions.libthrift % "provided" // required for scaladoc
-          )
+        // Also publish a 2.11 version since our other projects depend on this library.
+        crossScalaVersions := Seq(scalaVersion.value, Scala.version),
+        libraryDependencies ++= depend.scrooge() ++ Seq(
+          "org.apache.thrift" % "libthrift" % depend.versions.libthrift % "provided" // required for scaladoc
+        )
       )
   )
 
@@ -67,20 +85,29 @@ object build extends Build {
     settings =
       standardSettings ++
       uniform.project("humbug-generator", "au.com.cba.omnia.humbug.generator") ++
+      scala210Settings ++
+      strictDependencySettings ++
       uniformAssemblySettings ++
       inConfig(Test)(thriftSettings) ++
       Seq(
-        libraryDependencies ++= depend.hadoopClasspath ++ depend.scalaz() ++ depend.testing() ++
-          Seq(
-            "com.twitter"      %% "scrooge-generator" % depend.versions.scrooge,
-            "com.twitter"      %% "bijection-scrooge" % depend.versions.bijection % "test"
-              // exclude clashes with scrooge-generator
-              exclude("com.twitter", s"scrooge-core_${scalaBinaryVersion.value}")
-              exclude("com.twitter", s"util-core_${scalaBinaryVersion.value}")
-              exclude("com.twitter", s"util-codec_${scalaBinaryVersion.value}"),
-
-            "au.com.cba.omnia" %% "omnia-test"        % omniaTestVersion          % "test"
-          ).map(noHadoop(_))
+        libraryDependencies ++= depend.hadoopClasspath ++ depend.scalaz() ++ Seq(
+          "com.twitter"    %% "scrooge-generator" % depend.versions.scrooge,
+          "org.specs2"     %% "specs2-core"               % depend.versions.specs      % "test"
+            exclude("org.ow2.asm", "asm"),
+          "org.specs2"     %% "specs2-scalacheck"         % depend.versions.specs      % "test" 
+            exclude("org.ow2.asm", "asm")
+            exclude("org.scalacheck", s"scalacheck_${scalaBinaryVersion.value}"),
+          "org.scalacheck" %% "scalacheck"                % depend.versions.scalacheck % "test" 
+            exclude("org.scala-lang.modules", s"scala-parser-combinators_${scalaBinaryVersion.value}"),
+          "org.scalaz"     %% "scalaz-scalacheck-binding" % depend.versions.scalaz     % "test"
+            exclude("org.scalacheck", s"scalacheck_${scalaBinaryVersion.value}"),
+          "asm"             %  "asm"                      % depend.versions.asm        % "test",
+          "com.twitter"    %% "bijection-scrooge"         % depend.versions.bijection  % "test"
+            // exclude clashes with scrooge-generator
+            exclude("com.twitter", s"scrooge-core_${scalaBinaryVersion.value}")
+            exclude("com.twitter", s"util-core_${scalaBinaryVersion.value}")
+            exclude("com.twitter", s"util-codec_${scalaBinaryVersion.value}")//,
+        ).map(noHadoop(_))
       )
   ).dependsOn(core)
 
@@ -89,10 +116,10 @@ object build extends Build {
     base = file("plugin"),
     settings =
       standardSettings ++
-      uniform.project("humbug-plugin", "au.com.cba.omnia.humbug.plugin")
-  ).settings(
-    sbtPlugin := true
-  ).dependsOn(generator)
+      uniform.project("humbug-plugin", "au.com.cba.omnia.humbug.plugin") ++
+      scala210Settings
+  ).settings(sbtPlugin := true)
+    .dependsOn(generator)
 
   val thriftSettings = Seq(
     compileThrift <<= (

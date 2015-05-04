@@ -11,7 +11,7 @@ install:
 - ci/sbt-setup.sh
 - ci/sbt-setup-version.sh
 script:
-- sbt -Dsbt.global.base=$TRAVIS_BUILD_DIR/ci '; test; package; scripted' && ci/sbt-deploy.sh
+- sbt -Dsbt.global.base=$TRAVIS_BUILD_DIR/ci '; + test; + package; scripted' && ci/sbt-deploy.sh
   core generator && ci/sbt-deploy-ivy.sh plugin && ci/gh-pages.sh
 after_script:
 - rm -rf ci

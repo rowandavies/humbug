@@ -51,7 +51,7 @@ object Arbitraries {
     arbitrary[Short] |@| arbitrary[List[String]]) { case (s, l) =>
       val listish = new Listish()
       listish.short = s
-      listish.list  = l
+      listish.listy  = l
 
       listish
     })
@@ -60,7 +60,7 @@ object Arbitraries {
     arbitrary[Int] |@| arbitrary[Map[String, Int]]) { case (i, m) =>
       val mapish = new Mapish()
       mapish.int = i
-      mapish.map = m
+      mapish.mapy = m
 
       mapish
   })
@@ -68,7 +68,7 @@ object Arbitraries {
   implicit def NestedArbitrary: Arbitrary[Nested] = Arbitrary(
     arbitrary[Map[String, List[Int]]].map { l =>
       val nested = new Nested
-      nested.map = l
+      nested.mapy = l
 
       nested
     })

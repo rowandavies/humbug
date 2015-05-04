@@ -11,11 +11,16 @@
 //   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //   See the License for the specific language governing permissions and
 //   limitations under the License.
+
+import au.com.cba.omnia.uniform.dependency.UniformDependencyPlugin._
+
 import au.com.cba.omnia.humbug.HumbugSBT
 
 version := "0.1"
 
-scalaVersion := "2.10.2"
+scalaVersion := "2.10.5"
+
+uniformDependencySettings
 
 HumbugSBT.humbugSettings
 

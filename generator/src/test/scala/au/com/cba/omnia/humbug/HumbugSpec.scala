@@ -20,12 +20,13 @@ import java.io.File
 
 import com.twitter.bijection.scrooge.CompactScalaCodec
 
-import com.cba.omnia.test.Spec
+import org.specs2.{ScalaCheck, Specification}
+import org.specs2.matcher.ThrownExpectations
 
 import au.com.cba.omnia.humbug.test._
 import au.com.cba.omnia.humbug.test.Arbitraries._
 
-class HumbugSpec extends Spec { def is = s2"""
+class HumbugSpec extends Specification with ThrownExpectations with ScalaCheck { def is = s2"""
 
 Humbug
 ======
