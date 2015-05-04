@@ -60,7 +60,7 @@ object build extends Build {
       uniform.ghsettings ++
       dogeProjectSettings ++
       Seq(publishArtifact := false)
-  ).aggregate(core, generator, plugin)
+  ).aggregate(core, generator, plugin, test)
 
   lazy val core = Project(
     id = "core",
@@ -78,6 +78,20 @@ object build extends Build {
         )
       )
   )
+
+  lazy val test = Project(
+    id = "test",
+    base = file("test"),
+    settings =
+      standardSettings ++
+      uniform.project("humbug-test", "au.com.cba.omnia.humbug") ++
+      uniform.ghsettings ++
+      Seq(
+        libraryDependencies ++= depend.scrooge() ++ Seq(
+          "org.apache.thrift" % "libthrift" % depend.versions.libthrift % "provided" // required for scaladoc
+        )
+      )
+  ).dependsOn(core)
 
   lazy val generator = Project(
     id = "generator",
