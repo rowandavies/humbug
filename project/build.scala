@@ -195,13 +195,11 @@ object build extends Build {
   val thriftSettings = Seq(
     compileThrift <<= (
       streams,
-      //humbugThriftSourceFolder,
-      baseDirectory,
+      humbugThriftSourceFolder,
       fullClasspath in Runtime,
       sourceManaged
     ) map { (out, base, cp, outputDir) =>
       val files = (s"find ${base.getAbsolutePath} -name *.thrift" !!).split("\n")
-      //val files = (s"find ${base.getAbsolutePath}/src/test/thrift/humbug -name *.thrift" !!).split("\n")
       val cmd = s"java -cp ${cp.files.absString} au.com.cba.omnia.humbug.Main ${outputDir.getAbsolutePath} ${files.mkString(" ")}"
       out.log.info(cmd)
       cmd ! out.log
