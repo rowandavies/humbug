@@ -127,7 +127,6 @@ object build extends Build {
       uniform.ghsettings ++
       uniformThriftSettings ++
       scala210Settings ++
-      //humbugSettings ++
       inConfig(Test)(thriftSettings) ++
       Seq(
         libraryDependencies ++= depend.scrooge() ++ Seq(
@@ -137,11 +136,7 @@ object build extends Build {
         , "org.scalacheck"  %% "scalacheck"       % depend.versions.scalacheck
         , "com.twitter"     %% "util-eval"        % "6.24.0"                   % "test"
         , "org.scalamacros" %% "quasiquotes"      % "2.0.0"
-        //, "org.specs2"     %% "specs2-core"               % depend.versions.specs      % "test"
-        //    exclude("org.ow2.asm", "asm")
         , "org.specs2"     %% "specs2-matcher-extra" % depend.versions.specs      % "test"
-        //, "org.specs2"      %% "specs2"           % "3.3.1"                    //% "test"
-        //, "org.specs2"      %% "specs2"           % depend.versions.specs      % "test"
         ),
         scroogeThriftSourceFolder in Test <<= (sourceDirectory) { _ / "test" / "thrift" / "scrooge" },
         humbugThriftSourceFolder in Test <<= (sourceDirectory) { _ / "test" / "thrift" / "humbug" },
