@@ -26,7 +26,7 @@ import au.com.cba.omnia.uniform.thrift.UniformThriftPlugin._
 import au.com.cba.omnia.uniform.assembly.UniformAssemblyPlugin._
 
 /**
-  * This build publishes a Scala 2.10 version of core, generator and plugin since
+  * This build publishes a Scala 2.10 version of core, generator, test and plugin since
   * SBT plugins are based on Scala 2.10.
   * It also publishes a Scala 2.11 version of core since that is what the other projects depend on.
   * It uses sbt-doge to help do proper cross compilation, etc. since native SBT support for this is
@@ -91,33 +91,6 @@ object build extends Build {
       )
   )
 
-/* FAILS for 2.11
-  lazy val test = Project(
-    id = "test",
-    base = file("test"),
-    settings =
-      standardSettings ++
-      uniform.project("humbug-test", "au.com.cba.omnia.humbug.test") ++
-      uniform.ghsettings ++
-      uniformThriftSettings ++
-      inConfig(Test)(thriftSettings) ++
-      Seq(
-        libraryDependencies ++= depend.scrooge() ++ Seq(
-          "org.apache.thrift" % "libthrift" % depend.versions.libthrift % "provided" // required for scaladoc
-        , "org.scala-lang"   % "scala-compiler"   % Scala.version
-        , "org.scala-lang"   % "scala-reflect"    % Scala.version
-        , "org.scalacheck"  %% "scalacheck"       % depend.versions.scalacheck
-        , "com.twitter"     %% "util-eval"        % "6.24.0"                   % "test"
-        , "org.specs2"      %% "specs2"           % "3.3.1"                    % "test"
-        ),
-        scroogeThriftSourceFolder in Test <<= (sourceDirectory) { _ / "test" / "thrift" / "scrooge" },
-        humbugThriftSourceFolder in Test <<= (sourceDirectory) { _ / "test" / "thrift" / "humbug" }
-       //, addCompilerPlugin("org.scalamacros" % "paradise" % "2.0.1" cross CrossVersion.full)
-      )
-  ).dependsOn(core)
-  */
-
-/* WORKS FOR 2.10 */
   lazy val test = Project(
     id = "test",
     base = file("test"),
