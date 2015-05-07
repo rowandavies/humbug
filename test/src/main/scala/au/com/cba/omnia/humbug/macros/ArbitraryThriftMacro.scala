@@ -90,10 +90,6 @@ object ArbitraryThriftMacro {
 
     val in  = newTermName(c.fresh)
 
-    /** Fail compilation with nice error message. */
-    def abort(msg: String) =
-      c.abort(c.enclosingPosition, s"Can't create arbitrary instance for $srcType: $msg")
-
     def humbugGen(typ: Type, args: List[(String, Type)]): Tree = {
       // https://issues.scala-lang.org/browse/SI-8425
       //val out = newTermName(c.fresh) // Requires scala-2.11
