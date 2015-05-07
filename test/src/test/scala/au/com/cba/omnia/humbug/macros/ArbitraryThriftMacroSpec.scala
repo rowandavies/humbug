@@ -20,9 +20,11 @@ import org.scalacheck.Arbitrary.arbitrary
 import org.specs2.Specification
 import org.specs2.matcher.{TerminationMatchers, ThrownExpectations}
 
-import au.com.cba.omnia.humbug.macros.ArbitraryThriftMacro._
+import au.com.cba.omnia.humbug.macros.ArbitraryThriftSupport
 
-object ArbitraryThriftMacroSpec extends Specification { def is = s2"""
+object ArbitraryThriftMacroSpec
+  extends Specification
+  with ArbitraryThriftSupport { def is = s2"""
     Generate arbitrary thrift struct: Humbug  $arbitraryHumbugTest
     Generate arbitrary thrift struct: Scrooge $arbitraryScroogeTest
 """
@@ -33,8 +35,6 @@ object ArbitraryThriftMacroSpec extends Specification { def is = s2"""
       case Some(_:CustomerHumbug) => true
       case _                      => false
     }
-
-    implicit def CustomerHumbugArbitrary: Arbitrary[CustomerHumbug] = thriftArbitrary[CustomerHumbug]
 
     val genCustomer = arbitrary[CustomerHumbug]
     val result = isCustomerHumbug(genCustomer.sample)
@@ -48,8 +48,6 @@ object ArbitraryThriftMacroSpec extends Specification { def is = s2"""
       case Some(_:CustomerScrooge) => true
       case _                       => false
     }
-
-    implicit def CustomerScroogeArbitrary: Arbitrary[CustomerScrooge] = thriftArbitrary[CustomerScrooge]
 
     val genCustomer = arbitrary[CustomerScrooge]
     val result = isCustomerScrooge(genCustomer.sample)

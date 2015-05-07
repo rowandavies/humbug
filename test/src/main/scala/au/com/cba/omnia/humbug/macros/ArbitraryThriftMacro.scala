@@ -63,7 +63,7 @@ object ArbitraryThriftMacro {
   }
 
   /** Creates an arbitrary instance for a singleton type or product. */
-  def thriftArbitrary[A <: ThriftStruct]: Arbitrary[A] = macro impl[A]
+  def arbitraryThrift[A <: ThriftStruct]: Arbitrary[A] = macro impl[A]
 
   def impl[A <: ThriftStruct : c.WeakTypeTag](c: Context): c.Expr[Arbitrary[A]] = {
     import c.universe.{Symbol => _, _}
@@ -137,3 +137,11 @@ object ArbitraryThriftMacro {
   }
 
 }
+
+trait ArbitraryThriftSupport {
+  /** Creates an arbitrary instance for a singleton type or product. */
+  implicit def derivedArbitraryThrift[A <: ThriftStruct]: Arbitrary[A] =
+    macro ArbitraryThriftMacro.impl[A]
+}
+
+object ArbitraryThriftSupport extends ArbitraryThriftSupport
