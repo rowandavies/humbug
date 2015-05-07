@@ -85,7 +85,7 @@ object ArbitraryThriftMacro {
     val srcType       = c.universe.weakTypeOf[A]
     val humbugTyp     = c.universe.weakTypeOf[HumbugThriftStruct]
 
-    val dstFields     = fieldsFields[A](c).map { case (f, n)  => (f, n) }
+    val dstFields     = fieldsFields[A](c)
     val expectedTypes = dstFields.map { case (f, n) => (n, f.returnType) }
 
     val in  = newTermName(c.fresh)
