@@ -33,48 +33,34 @@ object ArbitraryThriftMacro {
 
   val ProductField = """_(\d+)""".r
 
-  /** Gets all the `_1` style getters and their number for a thrift struct in numerical order.*/
-  def indexed[A <: ThriftStruct: c.WeakTypeTag](c: Context): List[(c.universe.MethodSymbol, Int)] = 
-    indexedUnsafe(c)(c.universe.weakTypeOf[A])
-
-  /** Same as indexed but for any type where the type is assumed to be ThriftStruct.*/
-  def indexedUnsafe(c: Context)(typ: c.universe.Type): List[(c.universe.MethodSymbol, Int)] = {
-    import c.universe._
-    typ.members.toList.map(member => (member, member.name.toString)).collect({
-      case (member, ProductField(n)) =>
-        (member.asMethod, n.toInt)
-    }).sortBy(_._2)
-  }
-
   /** Gets all the fields of a Thrift struct sorted in order of definition.*/
-  def fieldsFields[A <: ThriftStruct: c.WeakTypeTag](c: Context): List[(c.universe.MethodSymbol, String)] =
+  def fields[A <: ThriftStruct: c.WeakTypeTag](c: Context): List[(c.universe.MethodSymbol, String)] =
     fieldsUnsafe(c)(c.universe.weakTypeOf[A])
 
   /** Same as fields but for any type where the type is assumed to be ThriftStruct.*/
   def fieldsUnsafe(c: Context)(typ: c.universe.Type): List[(c.universe.MethodSymbol, String)] = {
     import c.universe._
 
-    val fields =
+    /** Gets all the `_1` style getters for a thrift struct in numerical order.*/
+    val methodSymbols =
+      typ.members.toList.map(member => (member, member.name.toString)).collect({
+        case (member, ProductField(n)) =>
+          (member.asMethod, n.toInt)
+      }).sortBy(_._2).map(_._1)
+
+    val names =
       if (typ <:< c.universe.weakTypeOf[HumbugThriftStruct]) {
         // Get the fields in declaration order
         typ.declarations.sorted.toList.collect {
-          case sym: TermSymbol if sym.isVar => sym.name.toString.trim //.capitalize
+          case sym: TermSymbol if sym.isVar => sym.name.toString.trim
         }
       } else {
         typ.typeSymbol.companionSymbol.typeSignature
           .member(newTermName("apply")).asMethod.paramss.head.map(_.name.toString)
       }
 
-    methodsUnsafe(c)(typ).zip(fields)
+    methodSymbols.zip(names)
   }
-
-  /** Gets all the `_1` style getters for a thrift struct in numerical order.*/
-  def methods[A <: ThriftStruct: c.WeakTypeTag](c: Context): List[c.universe.MethodSymbol] =
-    indexed(c).map({ case (method, _) => method })
-
-  /** Same as methods but for any type where the type is assumed to be ThriftStruct.*/
-  def methodsUnsafe(c: Context)(typ: c.universe.Type): List[c.universe.MethodSymbol] =
-    indexedUnsafe(c)(typ).map({ case (method, _) => method })
 
   /** Creates an arbitrary instance for a singleton type or product. */
   def thriftArbitrary[A <: ThriftStruct]: Arbitrary[A] = macro impl[A]
@@ -85,7 +71,7 @@ object ArbitraryThriftMacro {
     val srcType       = c.universe.weakTypeOf[A]
     val humbugTyp     = c.universe.weakTypeOf[HumbugThriftStruct]
 
-    val dstFields     = fieldsFields[A](c)
+    val dstFields     = fields[A](c)
     val expectedTypes = dstFields.map { case (f, n) => (n, f.returnType) }
 
     val in  = newTermName(c.fresh)
