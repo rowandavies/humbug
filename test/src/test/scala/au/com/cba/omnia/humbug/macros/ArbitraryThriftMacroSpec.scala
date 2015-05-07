@@ -37,10 +37,7 @@ object ArbitraryThriftMacroSpec extends Specification { def is = s2"""
     implicit def CustomerHumbugArbitrary: Arbitrary[CustomerHumbug] = thriftArbitrary[CustomerHumbug]
 
     val genCustomer = arbitrary[CustomerHumbug]
-    val cust = genCustomer.sample
-    println (cust)
-    val result = isCustomerHumbug(cust)
-    //val result = isCustomerHumbug(genCustomer.sample)
+    val result = isCustomerHumbug(genCustomer.sample)
 
     result must_== true
   }
