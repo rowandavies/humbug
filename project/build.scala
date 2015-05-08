@@ -104,12 +104,12 @@ object build extends Build {
       Seq(
         libraryDependencies ++= depend.scrooge() ++ Seq(
           "org.apache.thrift" % "libthrift" % depend.versions.libthrift % "provided" // required for scaladoc
-        , "org.scala-lang"   % "scala-compiler"   % Scala.version
-        , "org.scala-lang"   % "scala-reflect"    % Scala.version
-        , "org.scalacheck"  %% "scalacheck"       % depend.versions.scalacheck
-        , "com.twitter"     %% "util-eval"        % "6.24.0"                   % "test"
-        , "org.scalamacros" %% "quasiquotes"      % "2.0.0"
-        , "org.specs2"     %% "specs2-matcher-extra" % depend.versions.specs      % "test"
+        , "org.scala-lang"    % "scala-compiler"       % Scala.version
+        , "org.scala-lang"    % "scala-reflect"        % Scala.version
+        , "org.scalacheck"   %% "scalacheck"           % depend.versions.scalacheck
+        , "com.twitter"      %% "util-eval"            % "6.24.0"                   % "test"
+        , "org.scalamacros"  %% "quasiquotes"          % "2.0.0"
+        , "org.specs2"       %% "specs2-matcher-extra" % depend.versions.specs      % "test"
         ),
         scroogeThriftSourceFolder in Test <<= (sourceDirectory) { _ / "test" / "thrift" / "scrooge" },
         humbugThriftSourceFolder in Test <<= (sourceDirectory) { _ / "test" / "thrift" / "humbug" },
