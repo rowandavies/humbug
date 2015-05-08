@@ -80,7 +80,7 @@ object ArbitraryThriftMacro {
       val out = newTermName("out")
 
       def mkInner(args: List[(String, Type)]): Tree = {
-        if (args.length == 0) {
+        if (args.isEmpty) {
           q"$out"
         } else {
           val (n, t) = args.head
@@ -106,7 +106,7 @@ object ArbitraryThriftMacro {
       }
 
       def mkInner(args: List[(String, Type)], terms: List[Tree]): Tree = {
-        if (args.length == 0) {
+        if (args.isEmpty) {
           mkNew(terms)
         } else {
           val (n, t) = args.head
