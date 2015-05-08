@@ -25,7 +25,8 @@ import com.twitter.scrooge._
 import au.com.cba.omnia.humbug.HumbugThriftStruct
 
 /**
-  * This macro creates Arbitrary instances for Thrift structs
+  * This macro creates Arbitrary instances for Thrift structs, with a precondition that
+  * an arbitrary for the type of the individual fields needs to exist.
   */
 object ArbitraryThriftMacro {
 
