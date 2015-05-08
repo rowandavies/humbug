@@ -16,8 +16,6 @@ package au.com.cba.omnia.humbug.macros
 
 import language.experimental.macros
 
-import reflect.macros.Context
-
 import scala.reflect.macros.Context
 
 import org.scalacheck.Arbitrary
