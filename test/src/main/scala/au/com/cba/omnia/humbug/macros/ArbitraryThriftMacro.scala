@@ -29,37 +29,6 @@ import au.com.cba.omnia.humbug.HumbugThriftStruct
   * an arbitrary for the type of the individual fields needs to exist.
   */
 object ArbitraryThriftMacro {
-
-  val ProductField = """_(\d+)""".r
-
-  /** Gets all the fields of a Thrift struct sorted in order of definition.*/
-  def fields[A <: ThriftStruct: c.WeakTypeTag](c: Context): List[(c.universe.MethodSymbol, String)] =
-    fieldsUnsafe(c)(c.universe.weakTypeOf[A])
-
-  /** Same as fields but for any type where the type is assumed to be ThriftStruct.*/
-  def fieldsUnsafe(c: Context)(typ: c.universe.Type): List[(c.universe.MethodSymbol, String)] = {
-    import c.universe._
-
-    /** Gets all the `_1` style getters for a thrift struct in numerical order.*/
-    val methodSymbols =
-      typ.members.toList.map(member => (member, member.name.toString)).collect({
-        case (member, ProductField(n)) => (member.asMethod, n.toInt)
-      }).sortBy(_._2).map(_._1)
-
-    val names =
-      if (typ <:< c.universe.weakTypeOf[HumbugThriftStruct]) {
-        // Get the fields in declaration order
-        typ.declarations.sorted.toList.collect {
-          case sym: TermSymbol if sym.isVar => sym.name.toString.trim
-        }
-      } else {
-        typ.typeSymbol.companionSymbol.typeSignature
-          .member(newTermName("apply")).asMethod.paramss.head.map(_.name.toString)
-      }
-
-    methodSymbols.zip(names)
-  }
-
   /** Creates an arbitrary instance for a singleton type or product. */
   def arbitraryThrift[A <: ThriftStruct]: Arbitrary[A] = macro impl[A]
 
@@ -134,6 +103,35 @@ object ArbitraryThriftMacro {
     c.Expr[Arbitrary[A]](result)
   }
 
+  /** Gets all the fields of a Thrift struct sorted in order of definition.*/
+  def fields[A <: ThriftStruct: c.WeakTypeTag](c: Context): List[(c.universe.MethodSymbol, String)] =
+    fieldsUnsafe(c)(c.universe.weakTypeOf[A])
+
+  /** Same as fields but for any type where the type is assumed to be ThriftStruct.*/
+  def fieldsUnsafe(c: Context)(typ: c.universe.Type): List[(c.universe.MethodSymbol, String)] = {
+    import c.universe._
+
+    val ProductField = """_(\d+)""".r
+
+    /** Gets all the `_1` style getters for a thrift struct in numerical order.*/
+    val methodSymbols =
+      typ.members.toList.map(member => (member, member.name.toString)).collect({
+        case (member, ProductField(n)) => (member.asMethod, n.toInt)
+      }).sortBy(_._2).map(_._1)
+
+    val names =
+      if (typ <:< c.universe.weakTypeOf[HumbugThriftStruct]) {
+        // Get the fields in declaration order
+        typ.declarations.sorted.toList.collect {
+          case sym: TermSymbol if sym.isVar => sym.name.toString.trim
+        }
+      } else {
+        typ.typeSymbol.companionSymbol.typeSignature
+          .member(newTermName("apply")).asMethod.paramss.head.map(_.name.toString)
+      }
+
+    methodSymbols.zip(names)
+  }
 }
 
 trait ArbitraryThriftSupport {
