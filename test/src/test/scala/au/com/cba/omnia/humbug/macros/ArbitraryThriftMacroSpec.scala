@@ -28,7 +28,7 @@ object ArbitraryThriftMacroSpec
     Generate arbitrary Customer thrift struct: Humbug  $arbitraryCustomerHumbugTest
     Generate arbitrary Customer thrift struct: Scrooge $arbitraryCustomerScroogeTest
 
-    Generate arbitrary Large thrift struct: Humbug  $arbitraryLargeHumbugTest
+    Generate arbitrary Large thrift struct: Humbug     $arbitraryLargeHumbugTest
 """
 
   def arbitraryCustomerHumbugTest = {
@@ -61,7 +61,7 @@ object ArbitraryThriftMacroSpec
 
     def isLargeHumbug[T](v: T) = v match {
       case Some(_:LargeHumbug) => true
-      case _                      => false
+      case _                   => false
     }
 
     val genLarge = arbitrary[LargeHumbug]
