@@ -43,8 +43,7 @@ object ArbitraryThriftMacro {
     /** Gets all the `_1` style getters for a thrift struct in numerical order.*/
     val methodSymbols =
       typ.members.toList.map(member => (member, member.name.toString)).collect({
-        case (member, ProductField(n)) =>
-          (member.asMethod, n.toInt)
+        case (member, ProductField(n)) => (member.asMethod, n.toInt)
       }).sortBy(_._2).map(_._1)
 
     val names =
@@ -84,11 +83,11 @@ object ArbitraryThriftMacro {
         if (args.length == 0) {
           q"$out"
         } else {
-          val (n,t) = args.head
-          val nn = newTermName(n)
-          val ni = Ident(nn)
-          val inner = mkInner(args.tail)
-          q"""arbitrary[$t] flatMap { $ni : $t => $out.$nn = $ni; ..$inner }"""
+          val (n, t) = args.head
+          val nn     = newTermName(n)
+          val ni     = Ident(nn)
+          val inner  = mkInner(args.tail)
+          q"""arbitrary[$t] flatMap { $ni: $t => $out.$nn = $ni; ..$inner }"""
         }
       }
 
@@ -110,10 +109,10 @@ object ArbitraryThriftMacro {
         if (args.length == 0) {
           mkNew(terms)
         } else {
-          val (n,t) = args.head
-          val nn = Ident(newTermName(n))
-          val inner = mkInner(args.tail, terms :+ nn)
-          q"""arbitrary[$t] flatMap { $nn : $t => ..$inner }"""
+          val (n, t) = args.head
+          val nn     = Ident(newTermName(n))
+          val inner  = mkInner(args.tail, terms :+ nn)
+          q"""arbitrary[$t] flatMap { $nn: $t => ..$inner }"""
         }
       }
 
