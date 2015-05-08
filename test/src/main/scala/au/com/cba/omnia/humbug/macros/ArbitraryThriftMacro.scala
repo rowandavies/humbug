@@ -14,7 +14,7 @@
 
 package au.com.cba.omnia.humbug.macros
 
-import language.experimental.macros
+import scala.language.experimental.macros
 
 import scala.reflect.macros.Context
 
