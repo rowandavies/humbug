@@ -47,23 +47,16 @@ object ArbitraryThriftMacro {
       //val out = newTermName(c.fresh) // Requires scala-2.11
       val out = newTermName("out")
 
-      def mkInner(args: List[(String, Type)]): Tree = {
-        if (args.isEmpty) {
-          q"$out"
-        } else {
-          val (n, t) = args.head
-          val nn     = newTermName(n)
-          val ni     = Ident(nn)
-          val inner  = mkInner(args.tail)
-          q"""arbitrary[$t] flatMap { $ni: $t => $out.$nn = $ni; ..$inner }"""
-        }
-      }
-
-      val inner = mkInner(args)
+      val inner = args.map { case (n: String, t: Type) => {
+        val nn     = newTermName(n)
+        val ni     = Ident(nn)
+        q"""arbitrary[$t] flatMap { $ni: $t=> $out.$nn = $ni};"""
+      }}
 
       q"""
         val $out = new $typ
         ..$inner
+        $out
       """
     }
 

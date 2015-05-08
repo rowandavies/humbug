@@ -25,11 +25,13 @@ import au.com.cba.omnia.humbug.macros.ArbitraryThriftSupport
 object ArbitraryThriftMacroSpec
   extends Specification
   with ArbitraryThriftSupport { def is = s2"""
-    Generate arbitrary thrift struct: Humbug  $arbitraryHumbugTest
-    Generate arbitrary thrift struct: Scrooge $arbitraryScroogeTest
+    Generate arbitrary Customer thrift struct: Humbug  $arbitraryCustomerHumbugTest
+    Generate arbitrary Customer thrift struct: Scrooge $arbitraryCustomerScroogeTest
+
+    Generate arbitrary Large thrift struct: Humbug     $arbitraryLargeHumbugTest
 """
 
-  def arbitraryHumbugTest = {
+  def arbitraryCustomerHumbugTest = {
 
     def isCustomerHumbug[T](v: T) = v match {
       case Some(_:CustomerHumbug) => true
@@ -42,7 +44,7 @@ object ArbitraryThriftMacroSpec
     result must_== true
   }
 
-  def arbitraryScroogeTest = {
+  def arbitraryCustomerScroogeTest = {
 
     def isCustomerScrooge[T](v: T) = v match {
       case Some(_:CustomerScrooge) => true
@@ -51,6 +53,19 @@ object ArbitraryThriftMacroSpec
 
     val genCustomer = arbitrary[CustomerScrooge]
     val result = isCustomerScrooge(genCustomer.sample)
+
+    result must_== true
+  }
+
+  def arbitraryLargeHumbugTest = {
+
+    def isLargeHumbug[T](v: T) = v match {
+      case Some(_:LargeHumbug) => true
+      case _                   => false
+    }
+
+    val genLarge = arbitrary[LargeHumbug]
+    val result = isLargeHumbug(genLarge.sample)
 
     result must_== true
   }
