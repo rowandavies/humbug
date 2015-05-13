@@ -41,7 +41,7 @@
       
           <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>This is pretty much a copy of the twitter scrooge sbt plugin https://github.com/twitter/scrooge
 modified for Humbug.
-</p></div><dl class="attributes block"> <dt>Source</dt><dd><a href="https://github.com/CommBank/humbug/tree/Dirty(a82bbcfdb5886be558640cc013965b58fd78961a)//plugin/src/main/scala/au/com/cba/omnia/humbug/HumbugSBT.scala" target="_blank">HumbugSBT.scala</a></dd></dl><div class="toggleContainer block">
+</p></div><dl class="attributes block"> <dt>Source</dt><dd><a href="https://github.com/CommBank/humbug/tree/Dirty(5eb6297c7587eabbb53a84c4ecdbb9f8a733951e)//plugin/src/main/scala/au/com/cba/omnia/humbug/HumbugSBT.scala" target="_blank">HumbugSBT.scala</a></dd></dl><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
           <div class="superTypes hiddenContent"><span class="extype" name="sbt.Plugin">Plugin</span>, <a href="http://www.scala-lang.org/api/2.10.5/index.html#scala.AnyRef" class="extype" target="_top">AnyRef</a>, <a href="http://www.scala-lang.org/api/2.10.5/index.html#scala.Any" class="extype" target="_top">Any</a></div>
         </div></div>
@@ -198,15 +198,15 @@ modified for Humbug.
               
         </dd></dl></div>
     </li><li name="au.com.cba.omnia.humbug.HumbugSBT#compile" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="compile(log:sbt.Logger,outputDir:java.io.File,thriftFiles:Set[java.io.File],validators:Seq[au.com.cba.omnia.humbug.ThriftValidator]):Unit"></a>
-      <a id="compile(Logger,File,Set[File],Seq[ThriftValidator]):Unit"></a>
+      <a id="compile(log:sbt.Logger,outputDir:java.io.File,thriftFiles:Set[java.io.File],validators:Seq[au.com.cba.omnia.humbug.ThriftValidator]):Set[java.io.File]"></a>
+      <a id="compile(Logger,File,Set[File],Seq[ThriftValidator]):Set[File]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">compile</span><span class="params">(<span name="log">log: <span class="extype" name="sbt.Logger">Logger</span></span>, <span name="outputDir">outputDir: <span class="extype" name="java.io.File">File</span></span>, <span name="thriftFiles">thriftFiles: <span class="extype" name="scala.Predef.Set">Set</span>[<span class="extype" name="java.io.File">File</span>]</span>, <span name="validators">validators: <span class="extype" name="scala.Seq">Seq</span>[<a href="ThriftValidator.html" class="extype" name="au.com.cba.omnia.humbug.ThriftValidator">ThriftValidator</a>]</span>)</span><span class="result">: <a href="http://www.scala-lang.org/api/2.10.5/index.html#scala.Unit" class="extype" target="_top">Unit</a></span>
+        <span class="name">compile</span><span class="params">(<span name="log">log: <span class="extype" name="sbt.Logger">Logger</span></span>, <span name="outputDir">outputDir: <span class="extype" name="java.io.File">File</span></span>, <span name="thriftFiles">thriftFiles: <span class="extype" name="scala.Predef.Set">Set</span>[<span class="extype" name="java.io.File">File</span>]</span>, <span name="validators">validators: <span class="extype" name="scala.Seq">Seq</span>[<a href="ThriftValidator.html" class="extype" name="au.com.cba.omnia.humbug.ThriftValidator">ThriftValidator</a>]</span>)</span><span class="result">: <span class="extype" name="scala.Predef.Set">Set</span>[<span class="extype" name="java.io.File">File</span>]</span>
       </span>
       </h4>
       
@@ -336,19 +336,6 @@ e.g. inConfig(Assembly)(genThriftSettings)
       </span>
       </h4>
       
-    </li><li name="au.com.cba.omnia.humbug.HumbugSBT#humbugIsDirty" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="humbugIsDirty:sbt.TaskKey[Boolean]"></a>
-      <a id="humbugIsDirty:TaskKey[Boolean]"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">val</span>
-      </span>
-      <span class="symbol">
-        <span class="name">humbugIsDirty</span><span class="result">: <span class="extype" name="sbt.TaskKey">TaskKey</span>[<a href="http://www.scala-lang.org/api/2.10.5/index.html#scala.Boolean" class="extype" target="_top">Boolean</a>]</span>
-      </span>
-      </h4>
-      
     </li><li name="au.com.cba.omnia.humbug.HumbugSBT#humbugSettings" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="humbugSettings:Seq[sbt.Def.Setting[_]]"></a>
       <a id="humbugSettings:Seq[sbt.Def.Setting[_]]"></a>
@@ -415,15 +402,15 @@ e.g. inConfig(Assembly)(genThriftSettings)
       </h4>
       
     </li><li name="au.com.cba.omnia.humbug.HumbugSBT#humbugThriftSources" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="humbugThriftSources:sbt.TaskKey[Seq[java.io.File]]"></a>
-      <a id="humbugThriftSources:TaskKey[Seq[File]]"></a>
+      <a id="humbugThriftSources:sbt.TaskKey[Set[java.io.File]]"></a>
+      <a id="humbugThriftSources:TaskKey[Set[File]]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">val</span>
       </span>
       <span class="symbol">
-        <span class="name">humbugThriftSources</span><span class="result">: <span class="extype" name="sbt.TaskKey">TaskKey</span>[<span class="extype" name="scala.Seq">Seq</span>[<span class="extype" name="java.io.File">File</span>]]</span>
+        <span class="name">humbugThriftSources</span><span class="result">: <span class="extype" name="sbt.TaskKey">TaskKey</span>[<span class="extype" name="scala.Predef.Set">Set</span>[<span class="extype" name="java.io.File">File</span>]]</span>
       </span>
       </h4>
       
