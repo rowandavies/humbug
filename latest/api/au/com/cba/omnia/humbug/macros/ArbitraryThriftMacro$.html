@@ -2,17 +2,17 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html>
         <head>
-          <title>ThriftValidator - au.com.cba.omnia.humbug.ThriftValidator</title>
-          <meta name="description" content="ThriftValidator - au.com.cba.omnia.humbug.ThriftValidator" />
-          <meta name="keywords" content="ThriftValidator au.com.cba.omnia.humbug.ThriftValidator" />
+          <title>ArbitraryThriftMacro - au.com.cba.omnia.humbug.macros.ArbitraryThriftMacro</title>
+          <meta name="description" content="ArbitraryThriftMacro - au.com.cba.omnia.humbug.macros.ArbitraryThriftMacro" />
+          <meta name="keywords" content="ArbitraryThriftMacro au.com.cba.omnia.humbug.macros.ArbitraryThriftMacro" />
           <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
           
-      <link href="../../../../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
-      <link href="../../../../../lib/diagrams.css" media="screen" type="text/css" rel="stylesheet" id="diagrams-css" />
+      <link href="../../../../../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
+      <link href="../../../../../../lib/diagrams.css" media="screen" type="text/css" rel="stylesheet" id="diagrams-css" />
       <script type="text/javascript">
          if(top === self) {
-            var url = '../../../../../index.html';
-            var hash = 'au.com.cba.omnia.humbug.ThriftValidator$';
+            var url = '../../../../../../index.html';
+            var hash = 'au.com.cba.omnia.humbug.macros.ArbitraryThriftMacro$';
             var anchor = window.location.hash;
             var anchor_opt = '';
             if (anchor.length >= 1)
@@ -24,9 +24,9 @@
         </head>
         <body class="value">
       <div id="definition">
-        <a href="ThriftValidator.html" title="Go to companion"><img src="../../../../../lib/object_to_class_big.png" /></a>
-        <p id="owner"><a href="../../../../package.html" class="extype" name="au">au</a>.<a href="../../../package.html" class="extype" name="au.com">com</a>.<a href="../../package.html" class="extype" name="au.com.cba">cba</a>.<a href="../package.html" class="extype" name="au.com.cba.omnia">omnia</a>.<a href="package.html" class="extype" name="au.com.cba.omnia.humbug">humbug</a></p>
-        <h1><a href="ThriftValidator.html" title="Go to companion">ThriftValidator</a></h1>
+        <img src="../../../../../../lib/object_big.png" />
+        <p id="owner"><a href="../../../../../package.html" class="extype" name="au">au</a>.<a href="../../../../package.html" class="extype" name="au.com">com</a>.<a href="../../../package.html" class="extype" name="au.com.cba">cba</a>.<a href="../../package.html" class="extype" name="au.com.cba.omnia">omnia</a>.<a href="../package.html" class="extype" name="au.com.cba.omnia.humbug">humbug</a>.<a href="package.html" class="extype" name="au.com.cba.omnia.humbug.macros">macros</a></p>
+        <h1>ArbitraryThriftMacro</h1>
       </div>
 
       <h4 id="signature" class="signature">
@@ -35,13 +35,15 @@
         <span class="kind">object</span>
       </span>
       <span class="symbol">
-        <span class="name">ThriftValidator</span><span class="result"> extends <a href="http://www.scala-lang.org/api/2.10.5/index.html#scala.Serializable" class="extype" target="_top">Serializable</a></span>
+        <span class="name">ArbitraryThriftMacro</span>
       </span>
       </h4>
       
-          <div id="comment" class="fullcommenttop"><dl class="attributes block"> <dt>Source</dt><dd><a href="https://github.com/CommBank/humbug/tree/Dirty(a04c0015869cc590d9cf285bf1f1bcf06a4cfccd)//generator/src/main/scala/au/com/cba/omnia/humbug/ThriftValidator.scala" target="_blank">ThriftValidator.scala</a></dd></dl><div class="toggleContainer block">
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>This macro allows Arbitrary instances of Thrift structs.
+This requires that the individual field types have arbitraries available.
+</p></div><dl class="attributes block"> <dt>Source</dt><dd><a href="https://github.com/CommBank/humbug/tree/Dirty(a04c0015869cc590d9cf285bf1f1bcf06a4cfccd)//test/src/main/scala/au/com/cba/omnia/humbug/macros/ArbitraryThriftMacro.scala" target="_blank">ArbitraryThriftMacro.scala</a></dd></dl><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
-          <div class="superTypes hiddenContent"><a href="http://www.scala-lang.org/api/2.10.5/index.html#scala.Serializable" class="extype" target="_top">Serializable</a>, <span class="extype" name="java.io.Serializable">Serializable</span>, <a href="http://www.scala-lang.org/api/2.10.5/index.html#scala.AnyRef" class="extype" target="_top">AnyRef</a>, <a href="http://www.scala-lang.org/api/2.10.5/index.html#scala.Any" class="extype" target="_top">Any</a></div>
+          <div class="superTypes hiddenContent"><a href="http://www.scala-lang.org/api/2.10.5/index.html#scala.AnyRef" class="extype" target="_top">AnyRef</a>, <a href="http://www.scala-lang.org/api/2.10.5/index.html#scala.Any" class="extype" target="_top">Any</a></div>
         </div></div>
         
 
@@ -59,7 +61,7 @@
                 <span class="filtertype">Inherited<br />
                 </span>
                 <ol id="linearization">
-                  <li class="in" name="au.com.cba.omnia.humbug.ThriftValidator"><span>ThriftValidator</span></li><li class="in" name="scala.Serializable"><span>Serializable</span></li><li class="in" name="java.io.Serializable"><span>Serializable</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
+                  <li class="in" name="au.com.cba.omnia.humbug.macros.ArbitraryThriftMacro"><span>ArbitraryThriftMacro</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
                 </ol>
               </div><div id="ancestors">
             <span class="filtertype"></span>
@@ -79,23 +81,7 @@
         <div id="allMembers">
         
 
-        <div id="types" class="types members">
-              <h3>Type Members</h3>
-              <ol><li name="au.com.cba.omnia.humbug.ThriftValidator.ErrorMsg" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="ErrorMsg=String"></a>
-      <a id="ErrorMsg:ErrorMsg"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">type</span>
-      </span>
-      <span class="symbol">
-        <span class="name">ErrorMsg</span><span class="result"> = <span class="extype" name="java.lang.String">String</span></span>
-      </span>
-      </h4>
-      
-    </li></ol>
-            </div>
+        
 
         
 
@@ -166,6 +152,25 @@
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="au.com.cba.omnia.humbug.macros.ArbitraryThriftMacro#arbitraryThrift" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="arbitraryThrift[A&lt;:com.twitter.scrooge.ThriftStruct]:org.scalacheck.Arbitrary[A]"></a>
+      <a id="arbitraryThrift[A&lt;:ThriftStruct]:Arbitrary[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">arbitraryThrift</span><span class="tparams">[<span name="A">A &lt;: <span class="extype" name="com.twitter.scrooge.ThriftStruct">ThriftStruct</span></span>]</span><span class="result">: <span class="extype" name="org.scalacheck.Arbitrary">Arbitrary</span>[<span class="extype" name="au.com.cba.omnia.humbug.macros.ArbitraryThriftMacro.arbitraryThrift.A">A</span>]</span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Annotations</dt><dd>
+                <span class="name">@macroImpl</span><span class="args">(<span>
+      
+      <span class="defval" name="`macro`(&quot;versionFormat&quot; = 1, &quot;className&quot; = &quot;au.com.cba.omnia.humbug.macros.ArbitraryThriftMacro$&quot;, &quot;methodName&quot; = &quot;impl&quot;, &quot;signature&quot; = List(-1, 0))[A]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
     </li><li name="scala.Any#asInstanceOf" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="asInstanceOf[T0]:T0"></a>
       <a id="asInstanceOf[T0]:T0"></a>
@@ -191,7 +196,7 @@
         <span class="name">clone</span><span class="params">()</span><span class="result">: <a href="http://www.scala-lang.org/api/2.10.5/index.html#scala.AnyRef" class="extype" target="_top">AnyRef</a></span>
       </span>
       </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../../../../java$lang.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../../../../../java$lang.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">(<span>
       
       <span class="defval" name="classOf[java.lang.CloneNotSupportedException]">...</span>
@@ -224,6 +229,19 @@
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="au.com.cba.omnia.humbug.macros.ArbitraryThriftMacro#fields" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="fields[A&lt;:com.twitter.scrooge.ThriftStruct](c:scala.reflect.macros.Context)(implicitevidence$2:c.WeakTypeTag[A]):List[(c.universe.MethodSymbol,String)]"></a>
+      <a id="fields[A&lt;:ThriftStruct](Context)(scala.reflect.macros.Context.WeakTypeTag[A]):List[(scala.reflect.macros.Universe.MethodSymbol,String)]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">fields</span><span class="tparams">[<span name="A">A &lt;: <span class="extype" name="com.twitter.scrooge.ThriftStruct">ThriftStruct</span></span>]</span><span class="params">(<span name="c">c: <a href="http://www.scala-lang.org/api/2.10.5/index.html#scala.reflect.macros.Context" class="extype" target="_top">Context</a></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <span class="extype" name="scala.reflect.macros.Aliases.WeakTypeTag">scala.reflect.macros.Context.WeakTypeTag</span>[<span class="extype" name="au.com.cba.omnia.humbug.macros.ArbitraryThriftMacro.fields.A">A</span>]</span>)</span><span class="result">: <span class="extype" name="scala.List">List</span>[(<span class="extype" name="scala.reflect.api.Symbols.MethodSymbol">scala.reflect.macros.Universe.MethodSymbol</span>, <span class="extype" name="scala.Predef.String">String</span>)]</span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Gets all the fields of a Thrift struct sorted in order of definition, for any type assumed to be ThriftStruct.</p>
     </li><li name="scala.AnyRef#finalize" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="finalize():Unit"></a>
       <a id="finalize():Unit"></a>
@@ -236,7 +254,7 @@
         <span class="name">finalize</span><span class="params">()</span><span class="result">: <a href="http://www.scala-lang.org/api/2.10.5/index.html#scala.Unit" class="extype" target="_top">Unit</a></span>
       </span>
       </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../../../../java$lang.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../../../../../java$lang.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">(<span>
       
       <span class="symbol">classOf[java.lang.Throwable]</span>
@@ -269,6 +287,19 @@
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="au.com.cba.omnia.humbug.macros.ArbitraryThriftMacro#impl" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="impl[A&lt;:com.twitter.scrooge.ThriftStruct](c:scala.reflect.macros.Context)(implicitevidence$1:c.WeakTypeTag[A]):c.Expr[org.scalacheck.Arbitrary[A]]"></a>
+      <a id="impl[A&lt;:ThriftStruct](Context)(scala.reflect.macros.Context.WeakTypeTag[A]):scala.reflect.macros.Context.Expr[Arbitrary[A]]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">impl</span><span class="tparams">[<span name="A">A &lt;: <span class="extype" name="com.twitter.scrooge.ThriftStruct">ThriftStruct</span></span>]</span><span class="params">(<span name="c">c: <a href="http://www.scala-lang.org/api/2.10.5/index.html#scala.reflect.macros.Context" class="extype" target="_top">Context</a></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <span class="extype" name="scala.reflect.macros.Aliases.WeakTypeTag">scala.reflect.macros.Context.WeakTypeTag</span>[<span class="extype" name="au.com.cba.omnia.humbug.macros.ArbitraryThriftMacro.impl.A">A</span>]</span>)</span><span class="result">: <span class="extype" name="scala.reflect.macros.Aliases.Expr">scala.reflect.macros.Context.Expr</span>[<span class="extype" name="org.scalacheck.Arbitrary">Arbitrary</span>[<span class="extype" name="au.com.cba.omnia.humbug.macros.ArbitraryThriftMacro.impl.A">A</span>]]</span>
+      </span>
+      </h4>
+      
     </li><li name="scala.Any#isInstanceOf" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="isInstanceOf[T0]:Boolean"></a>
       <a id="isInstanceOf[T0]:Boolean"></a>
@@ -413,11 +444,7 @@
         </div>
 
         <div id="inheritedMembers">
-        <div class="parent" name="scala.Serializable">
-              <h3>Inherited from <a href="http://www.scala-lang.org/api/2.10.5/index.html#scala.Serializable" class="extype" target="_top">Serializable</a></h3>
-            </div><div class="parent" name="java.io.Serializable">
-              <h3>Inherited from <span class="extype" name="java.io.Serializable">Serializable</span></h3>
-            </div><div class="parent" name="scala.AnyRef">
+        <div class="parent" name="scala.AnyRef">
               <h3>Inherited from <a href="http://www.scala-lang.org/api/2.10.5/index.html#scala.AnyRef" class="extype" target="_top">AnyRef</a></h3>
             </div><div class="parent" name="scala.Any">
               <h3>Inherited from <a href="http://www.scala-lang.org/api/2.10.5/index.html#scala.Any" class="extype" target="_top">Any</a></h3>
@@ -437,6 +464,6 @@
       <div id="tooltip"></div>
 
       <div id="footer">  </div>
-      <script defer="defer" type="text/javascript" id="jquery-js" src="../../../../../lib/jquery.js"></script><script defer="defer" type="text/javascript" id="jquery-ui-js" src="../../../../../lib/jquery-ui.js"></script><script defer="defer" type="text/javascript" id="tools-tooltip-js" src="../../../../../lib/tools.tooltip.js"></script><script defer="defer" type="text/javascript" id="template-js" src="../../../../../lib/template.js"></script>
+      <script defer="defer" type="text/javascript" id="jquery-js" src="../../../../../../lib/jquery.js"></script><script defer="defer" type="text/javascript" id="jquery-ui-js" src="../../../../../../lib/jquery-ui.js"></script><script defer="defer" type="text/javascript" id="tools-tooltip-js" src="../../../../../../lib/tools.tooltip.js"></script><script defer="defer" type="text/javascript" id="template-js" src="../../../../../../lib/template.js"></script>
     </body>
       </html>

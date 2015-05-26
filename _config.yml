@@ -1,4 +1,4 @@
 name: humbug
 exclude: [Gemfile]
 markdown: kramdown
-releaseVersion:  "0.6.1-20150513010955-5eb6297"
+releaseVersion:  "0.6.1-20150526051126-a04c001"
