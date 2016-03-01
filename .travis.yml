@@ -12,11 +12,13 @@ install:
 - ci/sbt-setup-version.sh
 script:
 - sbt -Dsbt.global.base=$TRAVIS_BUILD_DIR/ci '; + test; + package; scripted' && ci/sbt-deploy.sh
-  core generator && ci/sbt-deploy-ivy.sh plugin && ci/gh-pages.sh
+  core generator && ci/sbt-deploy-ivy.sh plugin && ci/sbt-gh-pages-ssh.sh
 after_script:
 - rm -rf ci
 - find $HOME/.ivy2 -name "*humbug*" -delete
 env:
   global:
-  - secure: G9zfa2fM5+gYpDbLItDM9OQnCTgEW+KE3Yh6D0GP7TEuGVcOlNyTWOA+Z1u5xBu5l4SrgrpuKiTeTYuiHlxiCwX2PWOoNOG8pd0muTl/x0RYpZjuJNPNbdUQ3MtC48k4HBuAsQYW0hLsdwF9kMRFoFZkJqzrFNclIgldz7Rvbh4=
-  - secure: Z5NceIhb13L5dVU90O+9UzsC5pt3c+Il7GcEIKHMuhINQv0fZbgZPvLnFYXq+wwpNtRuh7oYbX7VXfmcAY9jfLYTq2w4jNVUybZmMKLZ5cHJIDXHMGnUCaKB2FdGYvWZl5vN91WV9ZQg5VmiEzGRyCwtAsyFxlykTEh1T4LFlIY=
+    secure: ON4AVI3xRnRd9a+SHOvcYiUWlKqn/x9cKNdtj2Ku/AglJWwyUaGi8rfrVWUM3EOlvh+0Rffg3zgSYkkiPXnr6J0SjZeKyre9x/izeeafUmcOVD4grOqKhUKp9JlmN44f6jMBE7xMh142AphhAJ3i/4v3Y33VJ1BnbfofkxmkSoA=
+before_install:
+- openssl aes-256-cbc -K $encrypted_c3852da82fb3_key -iv $encrypted_c3852da82fb3_iv
+  -in .travis/deploy-key.enc -out .travis/deploy-key.pem -d
