@@ -17,7 +17,7 @@ resolvers ++= Seq(
   "commbank-releases" at "http://commbank.artifactoryonline.com/commbank/ext-releases-local"
 )
 
-val uniformVersion = "1.6.0-20160104234203-3ff47bf"
+val uniformVersion = "1.11.0-20160606065816-8e595be"
 
 addSbtPlugin("au.com.cba.omnia" % "uniform-core"       % uniformVersion)
 
