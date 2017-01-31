@@ -1,4 +1,0 @@
-name: humbug
-exclude: [Gemfile]
-markdown: kramdown
-releaseVersion: 0.7.5-20161223030631-47045ea
