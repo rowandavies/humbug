@@ -12,7 +12,7 @@
 //   See the License for the specific language governing permissions and
 //   limitations under the License.
 
-version in ThisBuild := "0.7.7"
+version in ThisBuild := "0.7.8"
 
 localVersionSettings
 
